@@ -135,4 +135,3 @@ router.get('/seed', (req, res) => {
 });
 
 export default router;
-
