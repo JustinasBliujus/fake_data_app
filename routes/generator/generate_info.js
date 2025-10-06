@@ -7,7 +7,7 @@ import path from 'path';
 const TITLE_AND_ALBUM_MAX = parseInt(process.env.TITLE_ALBUM_MAX) || 3;
 const TITLE_AND_ALBUM_MIN = parseInt(process.env.TITLE_ALBUM_MIN) || 1;
 
-export async function generateInfo(fakerInstance) {
+export async function generateInfo(fakerInstance, seed, page) {
     let artist;
     try {
         artist = fakerInstance.music.artist();
@@ -50,13 +50,12 @@ export async function generateInfo(fakerInstance) {
     const image = fakerInstance.image.avatarGitHub(); 
 
     const info = { artist, company, album, genre, title, image };
+    const imagePath = await createImageWithTitle(info, seed, page);
 
-    const imagePath = await createImageWithTitle(info);
-
-    return { artist, company, album, genre, title, image: imagePath };
+    return { ...info, image: imagePath };
 }
 
-async function createImageWithTitle(info) {
+async function createImageWithTitle(info,seed,page) {
     const width = 800;
     const height = 800;
     const canvas = createCanvas(width, height);
@@ -97,15 +96,15 @@ async function createImageWithTitle(info) {
         y += size * 1.2;
     }
 
-    const outputDir = path.join(process.cwd(), 'public', 'covers');
+    const outputDir = path.join(process.cwd(), 'public', 'covers', `${seed}_${page}`);
     await fs.mkdir(outputDir, { recursive: true });
+
     const fileName = `cover_${Date.now()}.jpg`;
     const filePath = path.join(outputDir, fileName);
     await fs.writeFile(filePath, canvas.toBuffer('image/jpeg', { quality: 0.9 }));
 
-    return `/covers/${fileName}`;
+    return `/covers/${seed}_${page}/${fileName}`;
 }
-
 
 
 
