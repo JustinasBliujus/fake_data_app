@@ -61,15 +61,19 @@ async function createImageWithTitle(info) {
     const height = 800;
     const canvas = createCanvas(width, height);
     const ctx = canvas.getContext('2d');
+
     const baseImage = await loadImage(info.image);
     ctx.drawImage(baseImage, 0, 0, width, height);
+
     ctx.fillStyle = 'rgba(0,0,0,0.5)';
     ctx.fillRect(0, 0, width, height);
 
     const words = info.title.toUpperCase().split(' ');
+
     const minFont = 40;
     const maxFont = 160;
     const wordSizes = words.map(word => Math.max(minFont, maxFont - word.length * 5));
+
     const totalHeight = wordSizes.reduce((sum, size) => sum + size * 1.2, 0);
     let y = (height - totalHeight) / 2;
 
@@ -79,9 +83,11 @@ async function createImageWithTitle(info) {
     for (let i = 0; i < words.length; i++) {
         const word = words[i];
         const size = wordSizes[i];
-        ctx.font = `bold ${size}px Sans`;
+
+        ctx.font = `bold ${size}px "Sans"`; 
         ctx.fillText(word, width / 2, y + size); 
-        y += size * 1.2; 
+
+        y += size * 1.2;
     }
 
     const outputDir = path.join(process.cwd(), 'public', 'covers');
@@ -92,6 +98,7 @@ async function createImageWithTitle(info) {
 
     return `/covers/${fileName}`;
 }
+
 
 
 
