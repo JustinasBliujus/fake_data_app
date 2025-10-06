@@ -32,8 +32,6 @@ router.get('/', async (req, res) => {
     if (!req.session.cachedBatch) {
         req.session.cachedBatch = await generateMusicBatch(settings.seed, settings.locale, BATCH_SIZE, settings.page);
         req.session.cachedBatchWithLikes = await generateLikesForBatch(settings.likes, req.session.cachedBatch);
-        let a = await req.session.cachedBatchWithLikes[0].info.image;
-        console.log(a)
     }
     res.render('main', {
         title: 'Main',
@@ -137,3 +135,4 @@ router.get('/seed', (req, res) => {
 });
 
 export default router;
+
