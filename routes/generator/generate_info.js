@@ -64,7 +64,6 @@ async function createImageWithTitle(info) {
 
     const baseImage = await loadImage(info.image);
     ctx.drawImage(baseImage, 0, 0, width, height);
-
     ctx.fillStyle = 'rgba(0,0,0,0.5)';
     ctx.fillRect(0, 0, width, height);
 
@@ -72,10 +71,20 @@ async function createImageWithTitle(info) {
 
     const minFont = 40;
     const maxFont = 160;
-    const wordSizes = words.map(word => Math.max(minFont, maxFont - word.length * 5));
+    let wordSizes = words.map(word => Math.max(minFont, maxFont - word.length * 5));
 
-    const totalHeight = wordSizes.reduce((sum, size) => sum + size * 1.2, 0);
-    let y = (height - totalHeight) / 2;
+    const lineHeights = wordSizes.map(size => size * 1.2);
+    const totalHeight = lineHeights.reduce((sum, h) => sum + h, 0);
+
+    let scale = 1;
+    if (totalHeight > height * 0.9) {
+        scale = (height * 0.9) / totalHeight;
+        wordSizes = wordSizes.map(size => size * scale);
+    }
+
+    const adjustedLineHeights = wordSizes.map(size => size * 1.2);
+    const adjustedTotalHeight = adjustedLineHeights.reduce((sum, h) => sum + h, 0);
+    let y = (height - adjustedTotalHeight) / 2;
 
     ctx.fillStyle = '#fff';
     ctx.textAlign = 'center';
@@ -83,10 +92,8 @@ async function createImageWithTitle(info) {
     for (let i = 0; i < words.length; i++) {
         const word = words[i];
         const size = wordSizes[i];
-
-        ctx.font = `bold ${size}px "Sans"`; 
+        ctx.font = `bold ${size}px "Sans"`;
         ctx.fillText(word, width / 2, y + size); 
-
         y += size * 1.2;
     }
 
