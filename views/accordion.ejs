@@ -1,0 +1,16 @@
+<!-- Accordion -->
+<div class="accordion mb-5" id="scrollable-content">
+    <!-- Static Header -->
+    <div class="d-flex align-items-center gap-2 px-3 py-3" style="border-bottom: 1px solid #000000;">
+        <span style="flex:1; height:20px; font-weight:bold;">Nr.</span>
+        <span style="flex:3; height:20px; font-weight:bold;">Title</span>
+        <span style="flex:3; height:20px; font-weight:bold;">Artist</span>
+        <span style="flex:3; height:20px; font-weight:bold;">Album</span>
+        <span style="flex:2; height:20px; font-weight:bold;">Genre</span>
+        <span style="width:16px"></span>
+    </div>
+
+    <div id="accordion-items">
+        <%- include('accordion-item', { batch: batch }) %>
+    </div>
+</div>

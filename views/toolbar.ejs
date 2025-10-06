@@ -1,0 +1,40 @@
+<!-- Toolbar -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Left side: Settings -->
+    <div class="d-inline-flex align-items-center gap-3">
+
+        <!-- Locale Dropdown -->
+        <div class="input-group flex-fill d-flex flex-column">
+            <label class="form-label mb-1" for="localeButton">Locale</label>
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="localeButton">
+                <%= locale %>
+            </button>
+            <ul class="dropdown-menu" id="localeInput">
+                <li><a class="dropdown-item" href="#">en</a></li>
+                <li><a class="dropdown-item" href="#">de</a></li>
+            </ul>
+        </div>
+        <!-- Seed Input -->
+        <div class="input-group flex-fill d-flex flex-column">
+            <label class="form-label mb-1" for="seedInput">Seed</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Seed" id="seedInput" value="<%= seed %>" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                <button class="btn btn-primary" type="button" id="generateSeedBtn">
+                    <i class="bi bi-arrow-clockwise"></i> 
+                </button>
+            </div>
+        </div>
+        <!-- Likes Range -->
+        <div class="input-group flex-fill d-flex flex-column">
+            <label id="likesCount" for="likesInput" class="form-label mb-1">Likes: <%= likes %></label>
+            <input type="range" class="form-range w-100" min="0" max="10" step="0.1" id="likesInput" value="<%= likes %>">
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <a href="#" class="btn btn-primary active" aria-current="page" id="paginationViewBtn"><i class="bi bi-table"></i></a>
+        <a href="#" class="btn btn-primary" id="infiniteViewBtn"><i class="bi bi-card-list"></i></a>
+    </div>
+
+
+</div>

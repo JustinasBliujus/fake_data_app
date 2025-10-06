@@ -1,0 +1,80 @@
+<% batch.forEach(function(item, index) { 
+    const uniqueIndex = (page - 1) * batchSize + index;
+%>
+<div class="accordion-item">
+    <h2 class="accordion-header" id="heading<%= uniqueIndex %>">
+        <button class="accordion-button collapsed" type="button"
+            data-bs-toggle="collapse" 
+            data-bs-target="#collapse<%= uniqueIndex %>" 
+            aria-expanded="false" 
+            aria-controls="collapse<%= uniqueIndex %>">
+            <div class="d-flex gap-2 w-100">
+                <span style="flex:1"><%= uniqueIndex + 1 %></span>
+                <span style="flex:3"><%= item.info.title %></span>
+                <span style="flex:3"><%= item.info.artist %></span>
+                <span style="flex:3"><%= item.info.album %></span>
+                <span style="flex:2"><%= item.info.genre %></span>
+            </div>
+        </button>
+    </h2>
+
+    <div id="collapse<%= uniqueIndex %>" class="accordion-collapse collapse" 
+        aria-labelledby="heading<%= uniqueIndex %>" data-bs-parent="#scrollable-content">
+        <div class="accordion-body">
+                <div class="d-flex">
+                    <div class="me-3 text-center">
+                        <!-- Album  -->
+                        <img src="<%= item.info.image %>" class="img-thumbnail" alt="Album Art" style="width:100px; height:100px; object-fit:cover;">
+
+                        <!-- Like Counter -->
+                        <div id="like-counter-<%= index %>" class="small text-muted mt-1">
+                            <i class="bi bi-heart-fill text-danger"></i> <%= item.likes || 0 %>
+                        </div>
+                    </div>
+
+
+                    <!-- Right content -->
+                    <div class="flex-grow-1">
+                        <!-- First line -->
+                        <div class="d-flex align-items-center mb-2 flex-wrap gap-2">
+                            <span class="fw-bold me-3"><%= item.info.title %> </span>
+
+                            <!-- Control buttons -->
+                            <div class="btn-group me-3">
+                                <button class="btn btn-sm btn-outline-primary" onclick="playSeedMelody('<%= index %>','<%= JSON.stringify(item.music) %>')">
+                                    <i class="bi bi-play-fill"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="pauseMelody()">
+                                    <i class="bi bi-pause-fill"></i>
+                                </button>
+                            </div>
+
+                            <!-- Range + time -->
+                            <input type="range" class="form-range me-2" style="width:150px;" 
+                                min="0" max="100" step="0.1" 
+                                id="range-<%= index %>" disabled value="0">
+                            <span id="timer-<%= index %>" class="small text-muted me-3">0:00 / <%= item.music.songDuration %></span>
+                        </div>
+
+                        <!-- Second line -->
+                        <div class="text-muted mb-1">
+                            <%= item.info.artist %> • <%= item.info.album %> • <%= item.info.genre %>
+                        </div>
+
+                        <!-- Third line -->
+                        <div class="text-muted mb-2">
+                            Recorded By <%= item.info.company %>
+                        </div>
+
+                        <!-- lyrics -->
+                        <div class="border rounded p-2 bg-light" style="max-height:120px; overflow-y:auto;">
+                            <% item.lyrics.split('\n').forEach(function(line) { %>
+                                <p class="mb-1"><%= line %></p>
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }) %>
