@@ -79,7 +79,7 @@ async function createImageWithTitle(info) {
     for (let i = 0; i < words.length; i++) {
         const word = words[i];
         const size = wordSizes[i];
-        ctx.font = `bold ${size}px`;
+        ctx.font = `${size}px`;
         ctx.fillText(word, width / 2, y + size); 
         y += size * 1.2; 
     }
@@ -92,4 +92,5 @@ async function createImageWithTitle(info) {
 
     return `/covers/${fileName}`;
 }
+
 
