@@ -4,5 +4,3 @@ coverage
 .env.test
 .stryker-tmp
 reports
-mutation-report.html
-mutation-report.json
